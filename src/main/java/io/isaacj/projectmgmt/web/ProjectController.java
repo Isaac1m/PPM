@@ -1,6 +1,7 @@
 package io.isaacj.projectmgmt.web;
 
 import io.isaacj.projectmgmt.domain.Project;
+import io.isaacj.projectmgmt.services.MapValidationErrorsService;
 import io.isaacj.projectmgmt.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,16 +25,15 @@ public class ProjectController {
     @Autowired
     ProjectService projectService;
 
+    @Autowired
+    MapValidationErrorsService mapValidationErrorsService;
+
     @PostMapping("")
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result) {
 
-        if(result.hasErrors()) {
-            Map<String, String> errorMap = new HashMap<>();
-            for(FieldError error : result.getFieldErrors()) {
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
-        }
+        ResponseEntity<?> errorMap = mapValidationErrorsService.mapValidationErrors(result);
+        if(errorMap != null) return errorMap;
+        
         projectService.saveOrUpdateProject(project);
         return new ResponseEntity<Project>(project, HttpStatus.CREATED);
     }
