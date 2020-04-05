@@ -22,6 +22,7 @@ public class ProjectTask {
     private Backlog backlog;
     @Column(updatable = false)
     private String projectSequence;
+    private String projectIdentifier;
     private Integer priority;
     private String acceptanceCriteria;
     private String status;
@@ -43,6 +44,14 @@ public class ProjectTask {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public String getProjectIdentifier() {
+        return projectIdentifier;
+    }
+
+    public void setProjectIdentifier(String projectIdentifier) {
+        this.projectIdentifier = projectIdentifier;
     }
 
     public Backlog getBacklog() {
@@ -124,7 +133,9 @@ public class ProjectTask {
         return "ProjectTask{" +
                 "id=" + id +
                 ", summary='" + summary + '\'' +
+                ", backlog=" + backlog +
                 ", projectSequence='" + projectSequence + '\'' +
+                ", projectIdentifier='" + projectIdentifier + '\'' +
                 ", priority=" + priority +
                 ", acceptanceCriteria='" + acceptanceCriteria + '\'' +
                 ", status='" + status + '\'' +
