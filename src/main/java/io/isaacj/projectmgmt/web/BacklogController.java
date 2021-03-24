@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/backlog")
 @CrossOrigin
-public class BacklogController {
+public class  BacklogController {
 
     @Autowired
     ProjectTaskService projectTaskService;
@@ -31,7 +31,7 @@ public class BacklogController {
         if(errorMap != null){
             return errorMap;
         }
-
+ 
         ProjectTask projectTask1 = projectTaskService.addProjectTask(backlog_id, projectTask);
 
         return new ResponseEntity<ProjectTask>(projectTask1, HttpStatus.CREATED);
@@ -41,5 +41,11 @@ public class BacklogController {
     @GetMapping("/{backlog_id}")
     public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlog_id) {
         return projectTaskService.findBacklogById(backlog_id);
+    }
+
+    @GetMapping("/{backlogId}/{ptId}")
+    public ResponseEntity<?> getProjetcTask(@PathVariable String backlogId, @PathVariable String ptId) {
+        ProjectTask projectTask = projectTaskService.findPTByProjectSequence(backlogId, ptId);
+        return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.OK);
     }
 }

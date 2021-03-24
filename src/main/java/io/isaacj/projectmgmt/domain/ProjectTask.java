@@ -20,7 +20,7 @@ public class ProjectTask {
     @JoinColumn(name = "backlog_id", updatable = false, nullable = false)
     @JsonIgnore
     private Backlog backlog;
-    @Column(updatable = false)
+    @Column(updatable = false, unique = true)
     private String projectSequence;
     private String projectIdentifier;
     private Integer priority;
