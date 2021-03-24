@@ -1,6 +1,7 @@
 package io.isaacj.projectmgmt.services;
 
 import io.isaacj.projectmgmt.domain.Backlog;
+import io.isaacj.projectmgmt.domain.Project;
 import io.isaacj.projectmgmt.domain.ProjectTask;
 import io.isaacj.projectmgmt.exceptions.ProjectNotFoundException;
 import io.isaacj.projectmgmt.repositories.BacklogRepository;
@@ -85,4 +86,12 @@ public class ProjectTaskService {
 
         return projectTask;
     }
+
+     public ProjectTask updateByProjectSequence(ProjectTask updatedTask, String backlogId, String ptId) {
+         ProjectTask projectTask = findPTByProjectSequence(backlogId, ptId);
+
+         projectTask = updatedTask;
+
+         return projectTaskRepository.save(projectTask);
+     }
 }
